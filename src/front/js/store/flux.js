@@ -13,7 +13,8 @@ const getState = ({ getStore, getActions, setStore }) => {
 					background: "white",
 					initial: "white"
 				}
-			]
+			],
+			setList: []
 		},
 		actions: {
 			// Use getActions to call a function within a fuction
@@ -41,6 +42,13 @@ const getState = ({ getStore, getActions, setStore }) => {
 
 				//reset the global store
 				setStore({ demo: demo });
+			},
+			getSetList: () => {
+				// fetching data from the backend
+				fetch("https://api.pokemontcg.io/v2/sets")
+					.then(resp => resp.json())
+					.then(data => setStore({ setList: data }))
+					.catch(error => console.log("Error loading message from backend", error));
 			}
 		}
 	};
