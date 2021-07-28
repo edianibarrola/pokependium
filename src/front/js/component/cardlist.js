@@ -8,9 +8,12 @@ import Tab from "react-bootstrap/Tab";
 import Row from "react-bootstrap/Row";
 import Col from "react-bootstrap/Col";
 import Table from "react-bootstrap/Table";
+import Button from "react-bootstrap/Button";
+import { CardHoverModal } from "./cardhovermodal";
 
 export const CardList = props => {
 	const { store, actions } = useContext(Context);
+	const [modalShow, setModalShow] = React.useState(false);
 	const params = useParams();
 
 	return (
@@ -21,8 +24,16 @@ export const CardList = props => {
 						return (
 							<div className="row">
 								<div className="col-auto">
-									<img src={item.images.small} alt="" />
+									<img onMouseEnter={() => setModalShow(true)} src={item.images.small} alt="" />
 								</div>
+								{/* <Button variant="primary" onClick={() => setModalShow(true)}>
+									Launch vertically centered modal
+								</Button> */}
+								<CardHoverModal
+									card={item.images.large}
+									show={modalShow}
+									onHide={() => setModalShow(false)}
+								/>
 								<div className="col d-flex align-items-center">{item.name}</div>
 								<div className="col-auto d-flex flex-column justify-content-center align-items-center">
 									<div>Standard</div>
