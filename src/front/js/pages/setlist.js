@@ -13,13 +13,30 @@ export const SetList = props => {
 	const params = useParams();
 
 	return (
-		<Tab.Container id="list-group-tabs-example" defaultActiveKey="#link1">
+		<Tab.Container id="list-group-tabs-example" defaultActiveKey="#link0">
 			<Row>
 				<Col sm={4}>
 					<ListGroup>
-						<ListGroup.Item action href="#link1">
-							Link 1
-						</ListGroup.Item>
+						{store.setList.data
+							? store.setList.data.map((item, i) => {
+									return (
+										<ListGroup.Item key={i} action href={`#link${i}`}>
+											<div className="row">
+												<div className="col-1">
+													<img
+														style={{ height: "2em", "padding-left": "2em" }}
+														src={item.images.symbol}
+														alt=""
+													/>
+												</div>
+												<div className="col-8 text-center">
+													<h1 style={{ "padding-left": "2em" }}> {item.name} </h1>
+												</div>
+											</div>
+										</ListGroup.Item>
+									);
+							  })
+							: "name"}
 
 						<ListGroup.Item action href="#link2">
 							Link 2
@@ -28,11 +45,11 @@ export const SetList = props => {
 				</Col>
 				<Col sm={8}>
 					<Tab.Content>
-						<Tab.Pane eventKey="#link1">
-							{store.setList.data ? (
-								store.setList.data.map((item, i) => {
-									return (
-										<div key={i} className="row">
+						{store.setList.data ? (
+							store.setList.data.map((item, i) => {
+								return (
+									<Tab.Pane key={i} eventKey={`#link${i}`}>
+										<div className="row">
 											<div className="col-1">
 												<img
 													style={{ height: "2em", "padding-left": "2em" }}
@@ -44,15 +61,12 @@ export const SetList = props => {
 												<h1 style={{ "padding-left": "2em" }}> {item.name} </h1>
 											</div>
 										</div>
-									);
-								})
-							) : (
-								<li>hello</li>
-							)}
-						</Tab.Pane>
-						<Tab.Pane eventKey="#link2">
-							<h1>h1 2</h1>
-						</Tab.Pane>
+									</Tab.Pane>
+								);
+							})
+						) : (
+							<li>hello</li>
+						)}
 					</Tab.Content>
 				</Col>
 			</Row>
