@@ -8,6 +8,7 @@ import Tab from "react-bootstrap/Tab";
 import Row from "react-bootstrap/Row";
 import Col from "react-bootstrap/Col";
 import Table from "react-bootstrap/Table";
+import { CardList } from "../component/cardlist";
 
 export const SetList = props => {
 	const { store, actions } = useContext(Context);
@@ -26,16 +27,14 @@ export const SetList = props => {
 									return (
 										<ListGroup.Item key={i} action href={`#link${i}`}>
 											<div className="row d-flex align-items-center">
-												<div className="col">
+												<div className="col-auto">
 													<img
 														style={{ height: "2em", "padding-left": "2em" }}
 														src={item.images.symbol}
 														alt=""
 													/>
 												</div>
-												<div className="col text-center">
-													<h1> {item.name} </h1>
-												</div>
+												<div className="col text-center">{item.name}</div>
 											</div>
 										</ListGroup.Item>
 									);
@@ -77,6 +76,10 @@ export const SetList = props => {
 															<td>{item.series}</td>
 														</tr>
 														<tr>
+															<td>Release Date:</td>
+															<td colSpan="2">{item.releaseDate}</td>
+														</tr>
+														<tr>
 															<td>Printed Total:</td>
 															<td colSpan="2">{item.printedTotal}</td>
 														</tr>
@@ -86,6 +89,7 @@ export const SetList = props => {
 														</tr>
 													</tbody>
 												</Table>
+												<CardList />
 											</div>
 										</div>
 									</Tab.Pane>
