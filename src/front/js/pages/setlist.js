@@ -89,7 +89,7 @@ export const SetList = props => {
 														</tr>
 													</tbody>
 												</Table>
-												<CardList />
+												<CardList setId={item.id} />
 											</div>
 										</div>
 									</Tab.Pane>

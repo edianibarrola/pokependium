@@ -14,7 +14,8 @@ const getState = ({ getStore, getActions, setStore }) => {
 					initial: "white"
 				}
 			],
-			setList: []
+			setList: [],
+			cardList: []
 		},
 		actions: {
 			// Use getActions to call a function within a fuction
@@ -44,11 +45,18 @@ const getState = ({ getStore, getActions, setStore }) => {
 				setStore({ demo: demo });
 			},
 			getSetList: () => {
-				// fetching data from the backend
+				// fetching sets from pokemontcg.io api
 				fetch("https://api.pokemontcg.io/v2/sets")
 					.then(resp => resp.json())
 					.then(data => setStore({ setList: data }))
-					.catch(error => console.log("Error loading message from backend", error));
+					.catch(error => console.log("Error fetching Sets from pokemontcg.io api", error));
+			},
+			getCardList: () => {
+				// fetching cards from the pokemontcg.io
+				fetch("https://api.pokemontcg.io/v2/cards")
+					.then(resp => resp.json())
+					.then(data => setStore({ cardList: data }))
+					.catch(error => console.log("Error fetching Cards from pokemontcg.io api", error));
 			}
 		}
 	};

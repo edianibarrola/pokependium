@@ -18,7 +18,7 @@ export const CardList = props => {
 			<div className="col-auto">
 				<img src="https://via.placeholder.com/150" alt="" />
 			</div>
-			<div className="col d-flex align-items-center">Card Name</div>
+			<div className="col d-flex align-items-center">Card Name {props.setId}</div>
 			<div className="col-auto d-flex flex-column justify-content-center align-items-center">
 				<div>Standard</div>
 				<input type="checkbox" />
@@ -31,5 +31,6 @@ export const CardList = props => {
 	);
 };
 CardList.propTypes = {
-	match: PropTypes.object
+	match: PropTypes.object,
+	setId: PropTypes.string //to be able to sort through all the cards based off the set id
 };
