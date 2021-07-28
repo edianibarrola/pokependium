@@ -21,15 +21,17 @@ const Layout = () => {
 				<ScrollToTop>
 					<Navbar />
 					<Switch>
-						<Route exact path="/">
-							<Home />
-						</Route>
-						<Route exact path="/setlist">
-							<SetList />
-						</Route>
-						<Route>
-							<h1>Not found!</h1>
-						</Route>
+						<div className="container">
+							<Route exact path="/">
+								<Home />
+							</Route>
+							<Route exact path="/setlist">
+								<SetList />
+							</Route>
+							<Route>
+								<h1>Not found!</h1>
+							</Route>
+						</div>
 					</Switch>
 					<Footer />
 				</ScrollToTop>

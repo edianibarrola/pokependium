@@ -7,6 +7,7 @@ import ListGroup from "react-bootstrap/ListGroup";
 import Tab from "react-bootstrap/Tab";
 import Row from "react-bootstrap/Row";
 import Col from "react-bootstrap/Col";
+import Table from "react-bootstrap/Table";
 
 export const SetList = props => {
 	const { store, actions } = useContext(Context);
@@ -15,22 +16,25 @@ export const SetList = props => {
 	return (
 		<Tab.Container id="list-group-tabs-example" defaultActiveKey="#link0">
 			<Row>
-				<Col sm={4}>
+				<Col
+					className="mx-auto"
+					style={{ "overflow-x": "hidden", "overflow-y": "auto", height: "100vh" }}
+					sm={4}>
 					<ListGroup>
 						{store.setList.data
 							? store.setList.data.map((item, i) => {
 									return (
 										<ListGroup.Item key={i} action href={`#link${i}`}>
-											<div className="row">
-												<div className="col-1">
+											<div className="row d-flex align-items-center">
+												<div className="col">
 													<img
 														style={{ height: "2em", "padding-left": "2em" }}
 														src={item.images.symbol}
 														alt=""
 													/>
 												</div>
-												<div className="col-8 text-center">
-													<h1 style={{ "padding-left": "2em" }}> {item.name} </h1>
+												<div className="col text-center">
+													<h1> {item.name} </h1>
 												</div>
 											</div>
 										</ListGroup.Item>
@@ -49,16 +53,39 @@ export const SetList = props => {
 							store.setList.data.map((item, i) => {
 								return (
 									<Tab.Pane key={i} eventKey={`#link${i}`}>
-										<div className="row">
-											<div className="col-1">
+										<div className="row d-flex flex-column justify-content-center align-items-center">
+											<div className="col d-flex justify-content-center">
 												<img
-													style={{ height: "2em", "padding-left": "2em" }}
-													src={item.images.symbol}
+													className="mt-5"
+													style={{ height: "8em" }}
+													src={item.images.logo}
 													alt=""
 												/>
 											</div>
-											<div className="col-8 text-center">
-												<h1 style={{ "padding-left": "2em" }}> {item.name} </h1>
+											<div className="col mt-5 text-center">
+												<h1> {item.name} </h1>
+											</div>
+											<div>
+												<Table striped bordered hover>
+													<tbody>
+														<tr>
+															<td>Name:</td>
+															<td>{item.name}</td>
+														</tr>
+														<tr>
+															<td>Series:</td>
+															<td>{item.series}</td>
+														</tr>
+														<tr>
+															<td>Printed Total:</td>
+															<td colSpan="2">{item.printedTotal}</td>
+														</tr>
+														<tr>
+															<td>Actual Total:</td>
+															<td colSpan="2">{item.total}</td>
+														</tr>
+													</tbody>
+												</Table>
 											</div>
 										</div>
 									</Tab.Pane>
