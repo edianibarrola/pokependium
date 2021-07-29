@@ -22,9 +22,14 @@ export const CardList = props => {
 				store.currentSet.data.map((item, i) => {
 					if (item.set.id.startsWith(props.setId)) {
 						return (
-							<div className="row">
+							<div className="row d-flex justify-content-around">
 								<div className="col-auto">
-									<img onClick={() => setModalShow(true)} src={item.images.small} alt="" />
+									<img
+										onClick={() => setModalShow(true)}
+										style={{ height: "8em" }}
+										src={item.images.small}
+										alt=""
+									/>
 								</div>
 								{/* <Button variant="primary" onClick={() => setModalShow(true)}>
 									Launch vertically centered modal
@@ -34,7 +39,7 @@ export const CardList = props => {
 									show={modalShow}
 									onHide={() => setModalShow(false)}
 								/>
-								<div className="col d-flex align-items-center">{item.name}</div>
+								<div className="col-3 d-flex align-items-center">{item.name}</div>
 								<div className="col-auto d-flex flex-column justify-content-center align-items-center">
 									<div>Standard</div>
 									<input type="checkbox" />

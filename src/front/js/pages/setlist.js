@@ -60,13 +60,13 @@ export const SetList = props => {
 										<div className="row d-flex flex-column justify-content-center align-items-center">
 											<div className="col d-flex justify-content-center">
 												<img
-													className="mt-5"
-													style={{ height: "8em" }}
+													className="mt-2"
+													style={{ height: "6em" }}
 													src={item.images.logo}
 													alt=""
 												/>
 											</div>
-											<div className="col mt-5 text-center">
+											<div className="col mt-2 text-center">
 												<h1> {item.name} </h1>
 											</div>
 											<div>
@@ -94,7 +94,15 @@ export const SetList = props => {
 														</tr>
 													</tbody>
 												</Table>
-												<CardList setId={item.id} />
+												<div
+													className="cardList"
+													style={{
+														"overflow-x": "hidden",
+														"overflow-y": "auto",
+														height: "100vh"
+													}}>
+													<CardList setId={item.id} />
+												</div>
 											</div>
 										</div>
 									</Tab.Pane>
