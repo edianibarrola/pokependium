@@ -22,7 +22,7 @@ export const CardList = props => {
 				store.currentSet.data.map((item, i) => {
 					if (item.set.id.startsWith(props.setId)) {
 						return (
-							<div className="row d-flex justify-content-around">
+							<div className="row mb-2 d-flex justify-content-around">
 								<div className="col-auto">
 									<img
 										onClick={() => setModalShow(true)}

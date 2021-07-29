@@ -16,22 +16,26 @@ const Layout = () => {
 	const basename = process.env.BASENAME || "";
 
 	return (
-		<div className="d-flex flex-column h-100">
+		<div className="d-flex flex-column ">
 			<BrowserRouter basename={basename}>
-				<ScrollToTop>
+				<div className="mb-5">
 					<Navbar />
+				</div>
+				<ScrollToTop>
 					<Switch>
-						<div className="container">
-							<Route exact path="/">
+						<Route exact path="/">
+							<div className="container mt-5">
 								<Home />
-							</Route>
-							<Route exact path="/setlist">
+							</div>
+						</Route>
+						<Route exact path="/setlist">
+							<div className="container mt-5">
 								<SetList />
-							</Route>
-							<Route>
-								<h1>Not found!</h1>
-							</Route>
-						</div>
+							</div>
+						</Route>
+						<Route>
+							<h1>Not found!</h1>
+						</Route>
 					</Switch>
 					<Footer />
 				</ScrollToTop>

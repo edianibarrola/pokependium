@@ -66,9 +66,7 @@ export const SetList = props => {
 													alt=""
 												/>
 											</div>
-											<div className="col mt-2 text-center">
-												<h1> {item.name} </h1>
-											</div>
+
 											<div>
 												<Table striped bordered hover>
 													<tbody>
@@ -99,7 +97,7 @@ export const SetList = props => {
 													style={{
 														"overflow-x": "hidden",
 														"overflow-y": "auto",
-														height: "100vh"
+														height: "67vh"
 													}}>
 													<CardList setId={item.id} />
 												</div>

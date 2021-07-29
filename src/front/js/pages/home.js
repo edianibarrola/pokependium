@@ -21,7 +21,6 @@ export const Home = () => {
 					</div>
 				</div>
 			</Link>
-			<div className="alert alert-info">{store.message || "Loading message from the backend..."}</div>
 		</div>
 	);
 };
