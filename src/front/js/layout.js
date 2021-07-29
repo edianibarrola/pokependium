@@ -16,7 +16,7 @@ const Layout = () => {
 	const basename = process.env.BASENAME || "";
 
 	return (
-		<div className="d-flex flex-column ">
+		<div className="d-flex h-100 flex-column ">
 			<BrowserRouter basename={basename}>
 				<div className="mb-5">
 					<Navbar />
