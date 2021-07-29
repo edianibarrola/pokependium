@@ -18,8 +18,8 @@ export const CardList = props => {
 
 	return (
 		<div>
-			{store.currentSet.data ? (
-				store.currentSet.data.map((item, i) => {
+			{store.cardList.data ? (
+				store.cardList.data.map((item, i) => {
 					if (item.set.id.startsWith(props.setId)) {
 						return (
 							<div className="row">

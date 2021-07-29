@@ -13,6 +13,7 @@ import { CardList } from "../component/cardlist";
 
 export const SetList = props => {
 	const { store, actions } = useContext(Context);
+	const [currentSetID, setCurrentSetID] = useState("");
 	const params = useParams();
 
 	return (
@@ -26,7 +27,14 @@ export const SetList = props => {
 						{store.setList.data
 							? store.setList.data.map((item, i) => {
 									return (
-										<ListGroup.Item key={i} action href={`#link${i}`}>
+										<ListGroup.Item
+											key={i}
+											action
+											href={`#link${i}`}
+											onClick={() => {
+												setCurrentSetID(item.id);
+												actions.setCurrentSetID(item.id);
+											}}>
 											<div className="row d-flex align-items-center">
 												<div className="col-auto">
 													<img
@@ -41,10 +49,6 @@ export const SetList = props => {
 									);
 							  })
 							: "name"}
-
-						<ListGroup.Item action href="#link2">
-							Link 2
-						</ListGroup.Item>
 					</ListGroup>
 				</Col>
 				<Col sm={8}>
