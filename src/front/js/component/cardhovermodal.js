@@ -22,25 +22,48 @@ export const CardHoverModal = props => {
 				</Modal.Title>
 			</Modal.Header>
 			<Modal.Body>
-				<div className="row">
-					<div className="col">
+				<div style={{ "overflow-x": "hidden", "overflow-y": "auto" }} className="row">
+					<div className="col-12 d-flex justify-content-center mx-auto">
 						<img
+							style={{ height: "40vh" }}
 							src={store.currentCard.data ? store.currentCard.data[0].images.large : "...image loading"}
 							alt=""
 						/>
 					</div>
 
-					<div className="col">
+					<div className="col-12">
+						<div className="col-12 text-center">Attacks</div>
 						{store.currentCard.data
 							? store.currentCard.data[0].attacks.map((attack, i) => {
 									return (
-										<div key={i} className="row">
-											<div className="col">{attack.name}:</div>
-											<div className="col">{attack.text}</div>
+										<div key={i} className="row d-flex justify-content-center align-items-center">
+											<div className="col-2 text-center">{attack.name}</div>
+											<div style={{ "border-left": "2px solid black" }} className="col-8">
+												{attack.text}
+											</div>
+											<div className="col-2">{attack.cost}</div>
 										</div>
 									);
 							  })
-							: "...image loading"}
+							: "...no attacks to show"}
+						<div className="col-12 text-center">Card Info</div>
+						{store.currentCard.data ? (
+							<div className="row d-flex justify-content-center align-items-center">
+								<div style={{ "border-right": "2px solid black" }} className="col-2 text-center">
+									Released on {store.currentCard.data[0].set.releaseDate}
+								</div>
+								<div className="col-2">
+									#{store.currentCard.data[0].number} of {store.currentCard.data[0].set.total} set
+									total
+								</div>
+								<div className="col-2">Set Total {store.currentCard.data[0].set.total}</div>
+								<div className="col-2">Actual Total {store.currentCard.data[0].set.printedTotal}</div>
+								<div className="col-2">Artist {store.currentCard.data[0].artist}</div>
+								<div className="col-2">Artist {store.currentCard.data[0].rarity}</div>
+							</div>
+						) : (
+							"...no card info show"
+						)}
 					</div>
 				</div>
 			</Modal.Body>
