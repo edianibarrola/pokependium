@@ -1,3 +1,26 @@
 /* 
     General Styles
 */
+body{
+    background-color: rgb(220, 247, 255);
+    color:gray;
+}
+.navbar{
+ margin-bottom: 50px;
+    color: gray;
+ background: #423DFF;
+background: -moz-linear-gradient(top, #423DFF 0%, #549BFF 36%, #8FD6E0 100%);
+background: -webkit-linear-gradient(top, #423DFF 0%, #549BFF 36%, #8FD6E0 100%);
+background: linear-gradient(to bottom, #423DFF 0%, #549BFF 36%, #8FD6E0 100%);
+-webkit-box-shadow: 0px 5px 9px 4px #8FD6E0, 0px 5px 18px 5px #8FD6E0, 0px 5px 18px 5px #8FD6E0; 
+box-shadow: 0px 5px 9px 4px #8FD6E0, 0px 5px 18px 5px #8FD6E0, 0px 5px 18px 5px #8FD6E0;
+    .btn{
+        background-color:rgb(220, 247, 255);
+    }
+}
+.cardListBG{
+    background:white;
+}
+table{
+    background:white;
+}

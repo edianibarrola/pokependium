@@ -14,7 +14,7 @@
     );
 }
 .pokeballMid{
-    background: white;
+    background: rgb(220, 247, 255);
     height:10px;
     width:100px;
     position: relative;
@@ -27,7 +27,7 @@
     
 }
 .pokeballMid::before{
-    background:white;
+    background:rgb(220, 247, 255);
     position: absolute;
     top :-58%;
     left:39%;

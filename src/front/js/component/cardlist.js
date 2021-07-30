@@ -20,7 +20,7 @@ export const CardList = props => {
 		actions.setSingleCardID(id);
 	};
 	return (
-		<div>
+		<div className="cardListBG">
 			<CardHoverModal show={modalShow} onHide={() => setModalShow(false)} />
 			{store.currentSet.data ? (
 				store.currentSet.data.map((item, i) => {
