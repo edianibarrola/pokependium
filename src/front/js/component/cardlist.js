@@ -15,17 +15,23 @@ export const CardList = props => {
 	const { store, actions } = useContext(Context);
 	const [modalShow, setModalShow] = React.useState(false);
 	const params = useParams();
-
+	const clickFunction = id => {
+		setModalShow(true);
+		actions.setSingleCardID(id);
+	};
 	return (
 		<div>
+			<CardHoverModal show={modalShow} onHide={() => setModalShow(false)} />
 			{store.currentSet.data ? (
 				store.currentSet.data.map((item, i) => {
 					if (item.set.id.startsWith(props.setId)) {
 						return (
-							<div className="row mb-2 d-flex justify-content-around">
+							<div key={i} className="row mb-2 d-flex justify-content-around">
 								<div className="col-auto">
 									<img
-										onClick={() => setModalShow(true)}
+										onClick={() => {
+											clickFunction(item.id);
+										}}
 										style={{ height: "8em" }}
 										src={item.images.small}
 										alt=""
@@ -34,11 +40,7 @@ export const CardList = props => {
 								{/* <Button variant="primary" onClick={() => setModalShow(true)}>
 									Launch vertically centered modal
 								</Button> */}
-								<CardHoverModal
-									card={item.images.large}
-									show={modalShow}
-									onHide={() => setModalShow(false)}
-								/>
+
 								<div className="col-3 d-flex align-items-center">{item.name}</div>
 								<div className="col-auto d-flex flex-column justify-content-center align-items-center">
 									<div>Standard</div>
