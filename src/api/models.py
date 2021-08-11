@@ -18,20 +18,20 @@ class User(db.Model):
             # do not serialize the password, its a security breach
         }
 
-class Set(db.Model):
+class CardSet(db.Model):
     id = db.Column(db.Integer, primary_key=True)
-    name = db.Column(db.String(120), unique=True, nullable=False)
-    series = db.Column(db.String(120), unique=True, nullable=False)
-    printedTotal = db.Column(db.Integer, unique=True, nullable=False)
-    total = db.Column(db.Integer, unique=True, nullable=False)
-    # legalities = db.Column(db.JSON(120), unique=True, nullable=False)
-    ptcgoCode = db.Column(db.String(120), unique=True, nullable=False)
-    releaseDate = db.Column(db.String(120), unique=True, nullable=False)
-    updatedAt = db.Column(db.String(120), unique=True, nullable=False)
+    name = db.Column(db.String(120), unique=True, nullable=True)
+    series = db.Column(db.String(120), unique=True, nullable=True)
+    printedTotal = db.Column(db.Integer, unique=True, nullable=True)
+    total = db.Column(db.Integer, unique=True, nullable=True)
+    # legalities = db.Column(db.JSON(120), unique=True, nullable=True)
+    ptcgoCode = db.Column(db.String(120), unique=True, nullable=True)
+    releaseDate = db.Column(db.String(120), unique=True, nullable=True)
+    updatedAt = db.Column(db.String(120), unique=True, nullable=True)
     
 
     def __repr__(self):
-        return '<Set %r>' % self.username
+        return '<CardSet %r>' % self.username
 
     def serialize(self):
         return {
@@ -45,3 +45,5 @@ class Set(db.Model):
             "releaseDate": self.releaseDate,
             "updatedAt": self.updatedAt
         }
+
+    
