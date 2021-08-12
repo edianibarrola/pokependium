@@ -17,7 +17,7 @@ def handle_hello():
 
     return jsonify(response_body), 200
 
-@api.route('/set', methods=['GET']) #Returns all of the users in a list
+@api.route('/cardset', methods=['GET']) #Returns all of the users in a list
 def get_all_sets():
     all_sets = CardSet.query.all()
     all_sets = list(map(lambda x: x.serialize(), all_sets))
@@ -26,13 +26,13 @@ def get_all_sets():
     }
     return jsonify(all_sets), 200
 
-@api.route('/set', methods=['POST']) #Adds a new set to the list 
+@api.route('/cardset', methods=['POST']) #Adds a new set to the list 
 def add_set():
-    set_info = request.get_json() 
+    set_info = request.get_json()
+    if set_info is None:
+        raise APIException("Your JSON body is wrong", 400)
     new_set= CardSet(name=set_info['name']) 
     db.session.add(new_set) 
-    db.session.commit() 
-    response = CardSet.query.all()
-    response = list(map(lambda x: x.serialize(), response))
-    
-    return jsonify(response), 200 
+    db.session.commit()
+    newDict = new_set.serialize()
+    return jsonify(newDict), 200 

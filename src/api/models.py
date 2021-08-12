@@ -20,14 +20,14 @@ class User(db.Model):
 
 class CardSet(db.Model):
     id = db.Column(db.Integer, primary_key=True)
-    name = db.Column(db.String(120), unique=True, nullable=True)
-    series = db.Column(db.String(120), unique=True, nullable=True)
-    printedTotal = db.Column(db.Integer, unique=True, nullable=True)
-    total = db.Column(db.Integer, unique=True, nullable=True)
-    # legalities = db.Column(db.JSON(120), unique=True, nullable=True)
-    ptcgoCode = db.Column(db.String(120), unique=True, nullable=True)
-    releaseDate = db.Column(db.String(120), unique=True, nullable=True)
-    updatedAt = db.Column(db.String(120), unique=True, nullable=True)
+    name = db.Column(db.String(120), unique=False, nullable=True)
+    series = db.Column(db.String(120), unique=False, nullable=True)
+    printedTotal = db.Column(db.Integer, unique=False, nullable=True)
+    total = db.Column(db.Integer, unique=False, nullable=True)
+    # legalities = db.Column(db.JSON(120), unique=False, nullable=True)
+    ptcgoCode = db.Column(db.String(120), unique=False, nullable=True)
+    releaseDate = db.Column(db.String(120), unique=False, nullable=True)
+    updatedAt = db.Column(db.String(120), unique=False, nullable=True)
     
 
     def __repr__(self):
