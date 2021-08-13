@@ -19,7 +19,8 @@ const getState = ({ getStore, getActions, setStore }) => {
 			currentSetID: [],
 			currentSet: [],
 			currentCard: [],
-			currentCardID: []
+			currentCardID: [],
+			apiURL: "https://3000-peach-rat-9b7tkk4j.ws-us14.gitpod.io"
 		},
 		actions: {
 			// Use getActions to call a function within a fuction
@@ -89,6 +90,15 @@ const getState = ({ getStore, getActions, setStore }) => {
 
 				setStore({ currentCardID: cardID });
 				actions.getSingleCard(cardID);
+			},
+			addNewUser: user => {
+				fetch(`${apiURL}/signup`, {
+					method: "POST",
+					body: JSON.stringify(user)
+				})
+					.then(res => res.json())
+					.then(resp => console.log("Success: ", JSON.stringify(resp)))
+					.catch(error => console.error("Error: ", error));
 			}
 		}
 	};

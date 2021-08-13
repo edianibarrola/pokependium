@@ -36,3 +36,23 @@ def add_set():
     db.session.commit()
     newDict = new_set.serialize()
     return jsonify(newDict), 200 
+
+@api.route('/signup', methods=['POST'])
+def add_user():
+    user_info = request.get_json()
+    if user_info is None:
+        raise APIException("Your JSON body is wrong", 400)
+    user = User()
+    user.username= user_info['username']
+    user.email= user_info['email']
+    user.password= user_info['password']
+    db.session.add(user)
+    db.session.commit()
+    newUser = user.serialize()
+    return jsonify(newUser),200
+
+@api.route('signup')
+def get_users():
+    users = User.query.all()
+    users = list(map(lambda x: x.serialize(), users))
+    return jsonify(users),200
