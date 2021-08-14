@@ -51,7 +51,7 @@ def add_user():
     newUser = user.serialize()
     return jsonify(newUser),200
 
-@api.route('signup')
+@api.route('/signup')
 def get_users():
     users = User.query.all()
     users = list(map(lambda x: x.serialize(), users))

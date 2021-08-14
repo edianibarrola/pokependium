@@ -1,6 +1,7 @@
 const getState = ({ getStore, getActions, setStore }) => {
 	return {
 		store: {
+			user: [],
 			message: null,
 			demo: [
 				{
@@ -20,7 +21,7 @@ const getState = ({ getStore, getActions, setStore }) => {
 			currentSet: [],
 			currentCard: [],
 			currentCardID: [],
-			apiURL: "https://3000-peach-rat-9b7tkk4j.ws-us14.gitpod.io"
+			apiURL: "https://3001-indigo-boa-tl7584lz.ws-us14.gitpod.io/"
 		},
 		actions: {
 			// Use getActions to call a function within a fuction
@@ -92,7 +93,7 @@ const getState = ({ getStore, getActions, setStore }) => {
 				actions.getSingleCard(cardID);
 			},
 			addNewUser: user => {
-				fetch(`${apiURL}/signup`, {
+				fetch(process.env.BACKEND_URL + "/api/signup", {
 					method: "POST",
 					body: JSON.stringify(user)
 				})

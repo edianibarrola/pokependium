@@ -1,9 +1,11 @@
 import React, { useState, useStore } from "react";
+import { Link, useHistory } from "react-router-dom";
 
 export const SignIn = props => {
 	const [userName, setUserName] = useState("");
 	const [userEmail, setUserEmail] = useState("");
 	const [userPassword, setUserPassword] = useState("");
+	const history = useHistory();
 	const handleUserName = e => {
 		setUserName(e.target.value);
 	};
@@ -15,11 +17,13 @@ export const SignIn = props => {
 	};
 	const handleSubmit = () => {
 		const [store, actions] = useStore();
-		const newUser = {
-			username: userName,
-			email: userEmail,
-			password: userPassword
-		};
+		setStore({
+			user: {
+				username: userName,
+				email: userEmail,
+				password: userPassword
+			}
+		});
 		console.log(newUser);
 		actions.addNewUser(newUser);
 		return newUser;
@@ -54,7 +58,13 @@ export const SignIn = props => {
 						onChange={e => handleUserPassword(e)}
 					/>
 				</div>
-				<button onClick={() => handleSubmit()}>Sign Up</button>
+				<button
+					onClick={() => {
+						handleSubmit;
+						history.push("/");
+					}}>
+					Sign Up
+				</button>
 			</form>
 		</div>
 	);
