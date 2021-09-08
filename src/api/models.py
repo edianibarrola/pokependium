@@ -2,12 +2,21 @@ from flask_sqlalchemy import SQLAlchemy
 
 db = SQLAlchemy()
 
+
+cards = db.Table('cards',
+    db.Column('card_id', db.Integer, db.ForeignKey('card.id'), primary_key=True),
+    db.Column('user_id', db.Integer, db.ForeignKey('user.id'), primary_key=True)
+)    
+
+
 class User(db.Model):
     id = db.Column(db.Integer, primary_key=True)
     username = db.Column(db.String(120), unique=False, nullable=False)
     email = db.Column(db.String(120), unique=False, nullable=False)
     password = db.Column(db.String(80), unique=False, nullable=False)
     is_active = db.Column(db.Boolean(), unique=False, nullable=True)
+    cards = db.relationship('Card', secondary=cards, lazy='subquery',
+        backref=db.backref('user', lazy=True))
 
     def __repr__(self):
         return '<User %r>' % self.username
@@ -16,36 +25,29 @@ class User(db.Model):
         return {
             "id": self.id,
             "username": self.username,
-            "email": self.email
+            "email": self.email,
+            "cards": list(map(lambda x: x.serialize(), self.cards)),
             # do not serialize the password, its a security breach
         }
 
-class CardSet(db.Model):
+class Card(db.Model):
     id = db.Column(db.Integer, primary_key=True)
-    name = db.Column(db.String(120), unique=False, nullable=True)
-    series = db.Column(db.String(120), unique=False, nullable=True)
-    printedTotal = db.Column(db.Integer, unique=False, nullable=True)
-    total = db.Column(db.Integer, unique=False, nullable=True)
-    # legalities = db.Column(db.JSON(120), unique=False, nullable=True)
-    ptcgoCode = db.Column(db.String(120), unique=False, nullable=True)
-    releaseDate = db.Column(db.String(120), unique=False, nullable=True)
-    updatedAt = db.Column(db.String(120), unique=False, nullable=True)
-    
+    card_id = db.Column(db.String(120),unique=True,nullable=False)
+    standard_art = db.Column(db.Boolean(), unique=False, nullable=True)
+    standard_qty = db.Column(db.Integer, unique=False, nullable=True)
+    alternate_art = db.Column(db.Boolean(), unique=False, nullable=True)
+    alternate_qty = db.Column(db.Integer, unique=False, nullable=True)
 
     def __repr__(self):
-        return '<CardSet %r>' % self.username
+        return '<Card %r>' % self.card_id
 
     def serialize(self):
         return {
-            # do not serialize the password, its a security breach
             "id": self.id,
-            "name": self.name,
-            "series": self.series,
-            "printedTotal": self.printedTotal,
-            "total": self.total,
-            "ptcgoCode": self.ptcgoCode,
-            "releaseDate": self.releaseDate,
-            "updatedAt": self.updatedAt
+            "card_id": self.card_id,
+            "standard_art": self.standard_art,
+            "standard_qty": self.standard_qty,
+            "alternate_art": self.alternate_art,
+            "alternate_qty": self.alternate_qty
+            # do not serialize the password, its a security breach
         }
-
-    
