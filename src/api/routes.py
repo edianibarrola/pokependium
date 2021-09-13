@@ -86,11 +86,13 @@ def allcards():
 def add_set():
     owned_card = request.get_json()
     current_user_id = get_jwt_identity()
-    user = User.query.filter(User.id == current_user_id)
+    user = User.query.filter(User.id == current_user_id).first()
     
     if owned_card is None:
         raise APIException("Your JSON body is wrong", 400)
-    new_card= Card(card_id=owned_card['card_id'],standard_art=owned_card['standard_art']) 
+    new_card= Card(card_id=owned_card['card_id'],standard_art=owned_card['standard_art'],standard_qty=owned_card['standard_qty'],alternate_art=owned_card['alternate_art'], alternate_qty=owned_card['alternate_qty']) 
+    user.cards.append(new_card)
+
     db.session.add(new_card) 
     db.session.commit()
     newDict = new_card.serialize()
