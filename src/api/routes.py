@@ -4,7 +4,10 @@ This module takes care of starting the API Server, Loading the DB and Adding the
 from flask import Flask, request, jsonify, url_for, Blueprint
 from api.models import db, User, Card
 from api.utils import generate_sitemap, APIException
+from flask_jwt_extended import create_access_token, jwt_required, get_jwt_identity
+from argon2 import PasswordHasher
 
+ph = PasswordHasher()
 api = Blueprint('api', __name__)
 
 
@@ -17,6 +20,49 @@ def handle_hello():
 
     return jsonify(response_body), 200
 
+@api.route('/register', methods=['POST'])
+def register():
+    content = request.get_json(silent=True)
+    user = User(email = content["email"], password = ph.hash(content["password"]), is_active = True)
+
+    db.session.add(user)
+    db.session.commit()
+
+    response_body = {
+        "message": "User Created"
+    }
+
+    return jsonify(response_body), 204
+
+@api.route('/login', methods=['POST'])
+def login():
+
+    content = request.get_json()
+    print(content)
+    user = User.query.filter(User.email == content["email"]).first()
+    if user is None:
+        return jsonify({"message": "invalid user"}), 403
+    
+    try:
+        ph.verify(user.password, content["password"])
+    except:
+        return jsonify({"message": "invalid password"}), 403
+        
+    access_token = create_access_token(identity=user.id, additional_claims={"email":user.email})
+    return jsonify({ "token": access_token, "user_id": user.id })
+
+@api.route('/userinfo', methods=['GET'])
+@jwt_required()
+def userinfo():
+    current_user_id = get_jwt_identity()
+    
+    user = User.query.filter(User.id == current_user_id).first()
+    
+    response_body = {
+        "message": f"Hello {user.email} "
+    }
+
+    return jsonify(response_body), 200
 # @api.route('/cardset', methods=['GET']) #Returns all of the users in a list
 # def get_all_sets():
 #     all_sets = CardSet.query.all()
@@ -37,22 +83,22 @@ def handle_hello():
 #     newDict = new_set.serialize()
 #     return jsonify(newDict), 200 
 
-@api.route('/signup', methods=['POST'])
-def add_user():
-    user_info = request.get_json()
-    if user_info is None:
-        raise APIException("Your JSON body is wrong", 400)
-    user = User()
-    user.username= user_info['username']
-    user.email= user_info['email']
-    user.password= user_info['password']
-    db.session.add(user)
-    db.session.commit()
-    newUser = user.serialize()
-    return jsonify(newUser),200
+# @api.route('/signup', methods=['POST'])
+# def add_user():
+#     user_info = request.get_json()
+#     if user_info is None:
+#         raise APIException("Your JSON body is wrong", 400)
+#     user = User()
+#     user.username= user_info['username']
+#     user.email= user_info['email']
+#     user.password= user_info['password']
+#     db.session.add(user)
+#     db.session.commit()
+#     newUser = user.serialize()
+#     return jsonify(newUser),200
 
-@api.route('/signup')
-def get_users():
-    users = User.query.all()
-    users = list(map(lambda x: x.serialize(), users))
-    return jsonify(users),200
+# @api.route('/signup')
+# def get_users():
+#     users = User.query.all()
+#     users = list(map(lambda x: x.serialize(), users))
+#     return jsonify(users),200

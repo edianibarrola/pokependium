@@ -92,14 +92,46 @@ const getState = ({ getStore, getActions, setStore }) => {
 				setStore({ currentCardID: cardID });
 				actions.getSingleCard(cardID);
 			},
-			addNewUser: user => {
-				fetch(process.env.BACKEND_URL + "/api/signup", {
+			//
+			registerUser: (email, password) => {
+				fetch(process.env.BACKEND_URL + "/api/register", {
 					method: "POST",
-					body: JSON.stringify(user)
+					mode: "cors",
+					body: JSON.stringify({ email, password }),
+					headers: {
+						"Content-Type": "application/json"
+					}
 				})
-					.then(res => res.json())
-					.then(resp => console.log("Success: ", JSON.stringify(resp)))
-					.catch(error => console.error("Error: ", error));
+					.then(resp => {
+						if (resp.status !== 204) {
+							throw new Error("register-error");
+						}
+
+						getActions().loginUser(email, password);
+					})
+					.catch(error => setStore({ authError: error, authToken: null }));
+			},
+
+			logout: () => setStore({ authToken: null }),
+
+			loginUser: (email, password) => {
+				fetch(process.env.BACKEND_URL + "/api/login", {
+					method: "POST",
+					mode: "cors",
+					body: JSON.stringify({ email, password }),
+					headers: {
+						"Content-Type": "application/json"
+					}
+				})
+					.then(resp => {
+						if (resp.status !== 200) {
+							throw new Error("authentication-error");
+						}
+
+						return resp.json();
+					})
+					.then(data => setStore({ authToken: data.token, authError: null }))
+					.catch(error => setStore({ authToken: null, authError: error }));
 			}
 		}
 	};
