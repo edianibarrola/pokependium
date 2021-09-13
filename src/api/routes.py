@@ -59,10 +59,47 @@ def userinfo():
     user = User.query.filter(User.id == current_user_id).first()
     
     response_body = {
-        "message": f"Hello {user.email} "
+        "message": f"Hello {user.email} ",
+        "details": user.serialize()
     }
 
     return jsonify(response_body), 200
+
+@api.route('/allcards', methods=['GET'])
+@jwt_required()
+def allcards():
+    current_user_id = get_jwt_identity()
+    
+    user = User.query.filter(User.id == current_user_id).first()
+    
+    all_cards= Card.query.all()
+    all_cards= list(map(lambda x: x.serialize(), all_cards))
+    response_body = {
+        "message": f"Hello {user.email} ",
+        "details": all_cards
+    }
+
+    return jsonify(response_body), 200
+
+@api.route('/addownedcard', methods=['POST']) #Adds a new set to the list 
+@jwt_required()
+def add_set():
+    owned_card = request.get_json()
+    current_user_id = get_jwt_identity()
+    user = User.query.filter(User.id == current_user_id)
+    
+    if owned_card is None:
+        raise APIException("Your JSON body is wrong", 400)
+    new_card= Card(card_id=owned_card['card_id'],standard_art=owned_card['standard_art']) 
+    db.session.add(new_card) 
+    db.session.commit()
+    newDict = new_card.serialize()
+    return jsonify(newDict), 200 
+
+
+
+
+
 # @api.route('/cardset', methods=['GET']) #Returns all of the users in a list
 # def get_all_sets():
 #     all_sets = CardSet.query.all()

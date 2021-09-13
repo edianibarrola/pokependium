@@ -44,11 +44,11 @@ export const CardList = props => {
 								<div className="col-3 d-flex align-items-center">{item.name}</div>
 								<div className="col-auto d-flex flex-column justify-content-center align-items-center">
 									<div>Standard</div>
-									<input type="checkbox" />
+									<input type="checkbox" value="true" checked />
 									<input type="number" style={{ width: "4em" }} />
 								</div>
 								<div className="col-auto d-flex flex-column justify-content-center align-items-center">
-									<div>Holographic</div>
+									<div>Alternate</div>
 									<input type="checkbox" />
 									<input type="number" style={{ width: "4em" }} />
 								</div>
