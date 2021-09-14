@@ -116,6 +116,9 @@ const getState = ({ getStore, getActions, setStore }) => {
 			logout: () => setStore({ authToken: null }),
 
 			loginUser: (email, password) => {
+				const store = getStore();
+				const actions = getActions();
+
 				fetch(process.env.BACKEND_URL + "/api/login", {
 					method: "POST",
 					mode: "cors",
@@ -131,13 +134,19 @@ const getState = ({ getStore, getActions, setStore }) => {
 
 						return resp.json();
 					})
-					.then(data => setStore({ authToken: data.token, authError: null }))
+					.then(data => {
+						setStore({
+							authToken: data.token,
+							authError: null
+						});
+						actions.getUserOwnedCards();
+					})
 					.catch(error => setStore({ authToken: null, authError: error }));
 			},
 			getUserOwnedCards: () => {
 				const store = getStore();
 				const actions = getActions();
-				// fetching all cards from specific set from the pokemontcg.io
+
 				fetch(process.env.BACKEND_URL + "/api/allcards", {
 					method: "GET",
 					headers: {
