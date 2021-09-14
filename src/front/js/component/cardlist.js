@@ -54,7 +54,20 @@ export const CardList = props => {
 										<input type="checkbox" value="false" />
 									)}
 									{/* <input type="checkbox" value="true" /> */}
-									<input type="number" style={{ width: "4em" }} />
+
+									{store.owned.find(card => card.card_id == item.id) ? (
+										store.owned.find(card => card.card_id == item.id).standard_qty != null ? (
+											<input
+												type="number"
+												value={store.owned.find(card => card.card_id == item.id).standard_qty}
+												style={{ width: "4em" }}
+											/>
+										) : (
+											<input type="number" style={{ width: "4em" }} />
+										)
+									) : (
+										<input type="number" style={{ width: "4em" }} />
+									)}
 								</div>
 								<div className="col-auto d-flex flex-column justify-content-center align-items-center">
 									<div>Alternate</div>
@@ -68,7 +81,19 @@ export const CardList = props => {
 										<input type="checkbox" value="false" />
 									)}
 
-									<input type="number" style={{ width: "4em" }} />
+									{store.owned.find(card => card.card_id == item.id) ? (
+										store.owned.find(card => card.card_id == item.id).alternate_qty != null ? (
+											<input
+												type="number"
+												value={store.owned.find(card => card.card_id == item.id).alternate_qty}
+												style={{ width: "4em" }}
+											/>
+										) : (
+											<input type="number" style={{ width: "4em" }} />
+										)
+									) : (
+										<input type="number" style={{ width: "4em" }} />
+									)}
 								</div>
 							</div>
 						);
