@@ -2,6 +2,7 @@ const getState = ({ getStore, getActions, setStore }) => {
 	return {
 		store: {
 			user: [],
+			owned: null,
 			message: null,
 			demo: [
 				{
@@ -132,6 +133,21 @@ const getState = ({ getStore, getActions, setStore }) => {
 					})
 					.then(data => setStore({ authToken: data.token, authError: null }))
 					.catch(error => setStore({ authToken: null, authError: error }));
+			},
+			getUserOwnedCards: () => {
+				const store = getStore();
+				const actions = getActions();
+				// fetching all cards from specific set from the pokemontcg.io
+				fetch(process.env.BACKEND_URL + "/api/allcards", {
+					method: "GET",
+					headers: {
+						"Content-Type": "application/json",
+						Authorization: "Bearer " + store.authToken
+					}
+				})
+					.then(resp => resp.json())
+					.then(data => setStore({ owned: data.details }))
+					.catch(error => console.log("Error fetching User Owned Cards", error));
 			}
 		}
 	};

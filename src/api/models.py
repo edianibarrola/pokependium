@@ -48,4 +48,4 @@ class Card(db.Model):
             "alternate_art": self.alternate_art,
             "alternate_qty": self.alternate_qty
             # do not serialize the password, its a security breach
-        }
+        } 

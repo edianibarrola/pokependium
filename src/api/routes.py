@@ -65,7 +65,7 @@ def userinfo():
 
     return jsonify(response_body), 200
 
-@api.route('/allcards', methods=['GET'])
+@api.route('/allcards', methods=['GET']) #gets all owned cards for current user
 @jwt_required()
 def allcards():
     current_user_id = get_jwt_identity()
