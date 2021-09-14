@@ -40,7 +40,9 @@ const Layout = () => {
 						</Route> */}
 						<Route exact path="/setlist">
 							<div className="container mt-5">
-								<SetList />
+								<SecurePage>
+									<SetList />
+								</SecurePage>
 							</div>
 						</Route>
 						<Route exact path="/register">
