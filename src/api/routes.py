@@ -83,7 +83,7 @@ def allcards():
 
 @api.route('/addownedcard', methods=['POST']) #Adds a new set to the list 
 @jwt_required()
-def add_set():
+def addownedcard(): 
     owned_card = request.get_json()
     current_user_id = get_jwt_identity()
     user = User.query.filter(User.id == current_user_id).first()
@@ -100,7 +100,37 @@ def add_set():
 
 
 
+@api.route('/usercards', methods=['GET'])
+@jwt_required()
+def usercards():
+    current_user_id = get_jwt_identity()
+    
+    user = User.query.filter(User.id == current_user_id).first()
+    cards = list(map(lambda x: x.serialize(),user.cards))
+    response_body = {
+        "message": f"Cards owned by {user.email} ",
+        "details": cards
+    }
 
+    return jsonify(response_body), 200
+
+
+@api.route('/updateownedcards', methods=['PUT']) #Adds a new set to the list 
+@jwt_required()
+def updateownedcards(): 
+    all_owned_cards = request.get_json()
+    current_user_id = get_jwt_identity()
+    user = User.query.filter(User.id == current_user_id).first()
+    for owned_card in all_owned_cards:
+        if owned_card is None:
+            raise APIException("Your JSON body is wrong", 400)
+        new_card= Card(card_id=owned_card['card_id'],standard_art=owned_card['standard_art'],standard_qty=owned_card['standard_qty'],alternate_art=owned_card['alternate_art'], alternate_qty=owned_card['alternate_qty']) 
+        user.cards.append(new_card)
+
+    db.session.add(new_card) 
+    db.session.commit()
+    newDict = new_card.serialize()
+    return jsonify(newDict), 200 
 
 # @api.route('/cardset', methods=['GET']) #Returns all of the users in a list
 # def get_all_sets():
