@@ -90,7 +90,7 @@ def addownedcard():
     
     if owned_card is None:
         raise APIException("Your JSON body is wrong", 400)
-    new_card= Card(card_id=owned_card['card_id'],standard_art=owned_card['standard_art'],standard_qty=owned_card['standard_qty'],alternate_art=owned_card['alternate_art'], alternate_qty=owned_card['alternate_qty']) 
+    new_card= Card(card_id=owned_card['card_id'], user_id=current_user_id, standard_art=owned_card['standard_art'],standard_qty=owned_card['standard_qty'],alternate_art=owned_card['alternate_art'], alternate_qty=owned_card['alternate_qty']) 
     user.cards.append(new_card)
 
     db.session.add(new_card) 
@@ -114,23 +114,53 @@ def usercards():
 
     return jsonify(response_body), 200
 
-
-@api.route('/updateownedcards', methods=['PUT']) #Adds a new set to the list 
+@api.route('updatecard', methods=['PUT'])
 @jwt_required()
-def updateownedcards(): 
-    all_owned_cards = request.get_json()
+def updatecards():
+    body = request.get_json()
     current_user_id = get_jwt_identity()
-    user = User.query.filter(User.id == current_user_id).first()
-    for owned_card in all_owned_cards:
-        if owned_card is None:
-            raise APIException("Your JSON body is wrong", 400)
-        if owned_card.id not in user.cards
-            new_card= Card(card_id=owned_card['card_id'],standard_art=owned_card['standard_art'],standard_qty=owned_card['standard_qty'],alternate_art=owned_card['alternate_art'], alternate_qty=owned_card['alternate_qty']) 
-            user.cards.append(new_card)
-            db.session.add(new_card) 
-            db.session.commit()
-    newDict = new_card.serialize()
-    return jsonify(newDict), 200 
+    user = User.query.get(current_user_id)
+    if user is None:
+        raise APIException('User not found', status_code=404)
+
+    if body['card_id'] not in user.cards:
+        updatecard= Card(card_id=body['card_id'], user_id=current_user_id, standard_art=body['standard_art'],standard_qty=body['standard_qty'],alternate_art=body['alternate_art'], alternate_qty=body['alternate_qty']) 
+        db.session.add(updatecard) 
+        db.session.commit()
+        
+        
+    if body['card_id'] in user.cards:
+        updatecard = Card.query.filter(Card.card_id == body.card_id).first()
+        updatecard.standard_art = body.standard_art
+        updatecard.standard_qty = body.standard_qty
+        updatecard.alternate_art = body.alternate_art
+        updatecard.alternate_qty = body.alternate_qty    
+
+        
+        
+        db.session.commit()
+    return jsonify('success'),200
+# @api.route('/updateownedcards', methods=['PUT']) #Adds a new set to the list 
+# @jwt_required()
+# def updateownedcards(): 
+#     all_owned_cards = request.get_json()
+#     current_user_id = get_jwt_identity()
+#     user = User.query.filter(User.id == current_user_id).first()
+#     for owned_card in all_owned_cards:
+#         if owned_card is None:
+#             raise APIException("Your JSON body is wrong", 400)
+#         if owned_card.id not in user.cards
+#             new_card= Card(card_id=owned_card['card_id'],standard_art=owned_card['standard_art'],standard_qty=owned_card['standard_qty'],alternate_art=owned_card['alternate_art'], alternate_qty=owned_card['alternate_qty']) 
+#             user.cards.append(new_card)
+#             db.session.add(new_card) 
+#             db.session.commit()
+#     newDict = new_card.serialize()
+#     return jsonify(newDict), 200 
+
+
+
+
+# old unused routes
 
 # @api.route('/cardset', methods=['GET']) #Returns all of the users in a list
 # def get_all_sets():

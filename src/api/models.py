@@ -3,10 +3,10 @@ from flask_sqlalchemy import SQLAlchemy
 db = SQLAlchemy()
 
 
-cards = db.Table('cards',
-    db.Column('card_id', db.Integer, db.ForeignKey('card.id'), primary_key=True),
-    db.Column('user_id', db.Integer, db.ForeignKey('user.id'), primary_key=True)
-)    
+# cards = db.Table('cards',
+#     db.Column('card_id', db.Integer, db.ForeignKey('card.id'), primary_key=True),
+#     db.Column('user_id', db.Integer, db.ForeignKey('user.id'), primary_key=True)
+# )    
 
 
 class User(db.Model):
@@ -14,8 +14,9 @@ class User(db.Model):
     email = db.Column(db.String(120), unique=True, nullable=False)
     password = db.Column(db.String(80), unique=False, nullable=False)
     is_active = db.Column(db.Boolean(), unique=False, nullable=True)
-    cards = db.relationship('Card', secondary=cards, lazy='subquery',
-        backref=db.backref('user', lazy=True))
+    # cards = db.relationship('Card', secondary=cards, lazy='subquery',
+    #     backref=db.backref('user', lazy=True))
+    cards = db.relationship('Card', backref='user', lazy=True)
 
     def __repr__(self):
         return '<User %r>' % self.email
@@ -35,6 +36,7 @@ class Card(db.Model):
     standard_qty = db.Column(db.Integer, unique=False, nullable=True)
     alternate_art = db.Column(db.Boolean(), unique=False, nullable=True)
     alternate_qty = db.Column(db.Integer, unique=False, nullable=True)
+    user_id = db.Column(db.Integer, db.ForeignKey('user.id'), nullable=False)
 
     def __repr__(self):
         return '<Card %r>' % self.card_id
@@ -46,6 +48,7 @@ class Card(db.Model):
             "standard_art": self.standard_art,
             "standard_qty": self.standard_qty,
             "alternate_art": self.alternate_art,
-            "alternate_qty": self.alternate_qty
+            "alternate_qty": self.alternate_qty,
+            "user_id" : self.user_id
             # do not serialize the password, its a security breach
         } 
