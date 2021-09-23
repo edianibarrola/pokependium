@@ -50,7 +50,13 @@ export const CardList = props => {
 												type="checkbox"
 												value="true"
 												checked
-												onClick={() => {
+												onClick={e => {
+													console.log(store.owned.find(card => card.card_id == item.id));
+													console.log(
+														(store.owned.find(
+															card => card.card_id == item.id
+														).standard_art = false)
+													);
 													console.log(store.owned.find(card => card.card_id == item.id));
 												}}
 											/>
@@ -68,6 +74,13 @@ export const CardList = props => {
 												type="number"
 												value={store.owned.find(card => card.card_id == item.id).standard_qty}
 												style={{ width: "4em" }}
+												onChange={e => {
+													console.log(
+														(store.owned.find(
+															card => card.card_id == item.id
+														).standard_qty = e.target.value)
+													);
+												}}
 											/>
 										) : (
 											<input type="number" style={{ width: "4em" }} />
