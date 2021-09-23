@@ -54,6 +54,7 @@ export const CardList = props => {
 												onClick={e => {
 													let newcard = store.owned.find(card => card.card_id == item.id);
 													newcard.standard_art = false;
+													newcard.standard_qty = 0;
 													actions.updateUserOwnedCard(newcard);
 												}}
 											/>
@@ -64,12 +65,26 @@ export const CardList = props => {
 												onClick={e => {
 													let newcard = store.owned.find(card => card.card_id == item.id);
 													newcard.standard_art = true;
+													newcard.standard_qty = 1;
 													actions.updateUserOwnedCard(newcard);
 												}}
 											/>
 										)
 									) : (
-										<input type="checkbox" value="false" />
+										<input
+											type="checkbox"
+											value="false"
+											onClick={e => {
+												let newcard = {
+													standard_art: true,
+													card_id: item.id,
+													standard_qty: 1,
+													alternate_art: false,
+													alternate_qty: 0
+												};
+												actions.updateUserOwnedCard(newcard);
+											}}
+										/>
 									)}
 									{/* <input type="checkbox" value="true" /> */}
 
@@ -103,6 +118,7 @@ export const CardList = props => {
 												onClick={e => {
 													let newcard = store.owned.find(card => card.card_id == item.id);
 													newcard.alternate_art = false;
+													newcard.alternate_qty = 0;
 													actions.updateUserOwnedCard(newcard);
 												}}
 											/>
@@ -113,12 +129,26 @@ export const CardList = props => {
 												onClick={e => {
 													let newcard = store.owned.find(card => card.card_id == item.id);
 													newcard.alternate_art = true;
+													newcard.alternate_qty = 1;
 													actions.updateUserOwnedCard(newcard);
 												}}
 											/>
 										)
 									) : (
-										<input type="checkbox" value="false" />
+										<input
+											type="checkbox"
+											value="false"
+											onClick={e => {
+												let newcard = {
+													standard_art: false,
+													card_id: item.id,
+													standard_qty: 0,
+													alternate_art: true,
+													alternate_qty: 1
+												};
+												actions.updateUserOwnedCard(newcard);
+											}}
+										/>
 									)}
 
 									{store.owned.find(card => card.card_id == item.id) ? (
