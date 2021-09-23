@@ -120,27 +120,33 @@ def updatecards():
     body = request.get_json()
     current_user_id = get_jwt_identity()
     user = User.query.get(current_user_id)
-    owned_card = Card.query.filter(Card.user_id == current_user_id and Card.card_id == body.card_id).first()
-    print(owned_card)
+    owned_card = Card.query.filter_by(user_id = current_user_id, card_id = body['card_id']).first()
+    print(owned_card, "11")
+    print(body, "1")
     if user is None:
         raise APIException('User not found', status_code=404)
 
     if owned_card is None:
-        newcard= Card(card_id=body['card_id'], user_id=current_user_id, standard_art=body['standard_art'],standard_qty=body['standard_qty'],alternate_art=body['alternate_art'], alternate_qty=body['alternate_qty']) 
+        print(owned_card,"2")
+        newcard= Card(card_id = body['card_id'], user_id = current_user_id, standard_art = body['standard_art'], standard_qty = body['standard_qty'], alternate_art = body['alternate_art'], alternate_qty = body['alternate_qty']) 
         db.session.add(newcard) 
-    db.session.commit()
+        db.session.commit()
         
-        
+    
     if body['card_id'] == owned_card.card_id:
-        updatecard = Card.query.filter(Card.card_id == body.card_id and Card.user_id == current_user_id).first()
-        updatecard.standard_art = body.standard_art
-        updatecard.standard_qty = body.standard_qty
-        updatecard.alternate_art = body.alternate_art
-        updatecard.alternate_qty = body.alternate_qty    
-
-        
-        
-    db.session.commit()
+        print(owned_card,'3')
+        updatecard = Card.query.filter_by(user_id = current_user_id, card_id = body['card_id']).first()
+        updatecard.standard_art = body['standard_art']
+        updatecard.standard_qty = body['standard_qty']
+        updatecard.alternate_art = body['alternate_art']
+        updatecard.alternate_qty = body['alternate_qty']    
+        db.session.commit()
+    # else: 
+    #     print(owned_card,'4')    
+    #     newcard= Card(card_id=body['card_id'], user_id=current_user_id, standard_art=body['standard_art'],standard_qty=body['standard_qty'],alternate_art=body['alternate_art'], alternate_qty=body['alternate_qty']) 
+    #     db.session.add(newcard) 
+    #     db.session.commit()
+    
     return jsonify('success'),200
 # @api.route('/updateownedcards', methods=['PUT']) #Adds a new set to the list 
 # @jwt_required()
