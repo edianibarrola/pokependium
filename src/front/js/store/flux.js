@@ -147,7 +147,7 @@ const getState = ({ getStore, getActions, setStore }) => {
 				const store = getStore();
 				const actions = getActions();
 
-				fetch(process.env.BACKEND_URL + "/api/allcards", {
+				fetch(process.env.BACKEND_URL + "/api/usercards", {
 					method: "GET",
 					headers: {
 						"Content-Type": "application/json",
