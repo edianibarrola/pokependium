@@ -15,6 +15,7 @@ export const CardList = props => {
 	const { store, actions } = useContext(Context);
 	const [modalShow, setModalShow] = React.useState(false);
 	const params = useParams();
+
 	const clickFunction = id => {
 		setModalShow(true);
 		actions.setSingleCardID(id);
@@ -51,17 +52,21 @@ export const CardList = props => {
 												value="true"
 												checked
 												onClick={e => {
-													console.log(store.owned.find(card => card.card_id == item.id));
-													console.log(
-														(store.owned.find(
-															card => card.card_id == item.id
-														).standard_art = false)
-													);
-													console.log(store.owned.find(card => card.card_id == item.id));
+													let newcard = store.owned.find(card => card.card_id == item.id);
+													newcard.standard_art = false;
+													actions.updateUserOwnedCard(newcard);
 												}}
 											/>
 										) : (
-											<input type="checkbox" value="false" />
+											<input
+												type="checkbox"
+												value="false"
+												onClick={e => {
+													let newcard = store.owned.find(card => card.card_id == item.id);
+													newcard.standard_art = true;
+													actions.updateUserOwnedCard(newcard);
+												}}
+											/>
 										)
 									) : (
 										<input type="checkbox" value="false" />
@@ -75,11 +80,9 @@ export const CardList = props => {
 												value={store.owned.find(card => card.card_id == item.id).standard_qty}
 												style={{ width: "4em" }}
 												onChange={e => {
-													console.log(
-														(store.owned.find(
-															card => card.card_id == item.id
-														).standard_qty = e.target.value)
-													);
+													let newcard = store.owned.find(card => card.card_id == item.id);
+													newcard.standard_qty = e.target.value;
+													actions.updateUserOwnedCard(newcard);
 												}}
 											/>
 										) : (
@@ -93,9 +96,26 @@ export const CardList = props => {
 									<div>Alternate</div>
 									{store.owned.find(card => card.card_id == item.id) ? (
 										store.owned.find(card => card.card_id == item.id).alternate_art == true ? (
-											<input type="checkbox" value="true" checked />
+											<input
+												type="checkbox"
+												value="true"
+												checked
+												onClick={e => {
+													let newcard = store.owned.find(card => card.card_id == item.id);
+													newcard.alternate_art = false;
+													actions.updateUserOwnedCard(newcard);
+												}}
+											/>
 										) : (
-											<input type="checkbox" value="false" />
+											<input
+												type="checkbox"
+												value="false"
+												onClick={e => {
+													let newcard = store.owned.find(card => card.card_id == item.id);
+													newcard.alternate_art = true;
+													actions.updateUserOwnedCard(newcard);
+												}}
+											/>
 										)
 									) : (
 										<input type="checkbox" value="false" />
@@ -107,6 +127,11 @@ export const CardList = props => {
 												type="number"
 												value={store.owned.find(card => card.card_id == item.id).alternate_qty}
 												style={{ width: "4em" }}
+												onChange={e => {
+													let newcard = store.owned.find(card => card.card_id == item.id);
+													newcard.alternate_qty = e.target.value;
+													actions.updateUserOwnedCard(newcard);
+												}}
 											/>
 										) : (
 											<input type="number" style={{ width: "4em" }} />
@@ -120,7 +145,7 @@ export const CardList = props => {
 					}
 				})
 			) : (
-				<h1>oops</h1>
+				<h1>Loading...</h1>
 			)}
 		</div>
 	);

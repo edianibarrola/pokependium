@@ -157,6 +157,25 @@ const getState = ({ getStore, getActions, setStore }) => {
 					.then(resp => resp.json())
 					.then(data => setStore({ owned: data.details }))
 					.catch(error => console.log("Error fetching User Owned Cards", error));
+			},
+			updateUserOwnedCard: card => {
+				const store = getStore();
+				const actions = getActions();
+				console.log(card + "this is the console from update");
+				fetch(process.env.BACKEND_URL + "/api/updatecard", {
+					method: "PUT", // or 'POST'
+					body: JSON.stringify(card), // data can be `string` or {object}!
+					headers: {
+						"Content-Type": "application/json",
+						Authorization: "Bearer " + store.authToken
+					}
+				})
+					.then(res => res.json())
+					.then(response => {
+						console.log("Success:", JSON.stringify(response));
+						actions.getUserOwnedCards();
+					})
+					.catch(error => console.error("Error:", error));
 			}
 		}
 	};
