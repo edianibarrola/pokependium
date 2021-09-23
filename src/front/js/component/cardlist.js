@@ -46,7 +46,14 @@ export const CardList = props => {
 									<div>Standard</div>
 									{store.owned.find(card => card.card_id == item.id) ? (
 										store.owned.find(card => card.card_id == item.id).standard_art == true ? (
-											<input type="checkbox" value="true" checked />
+											<input
+												type="checkbox"
+												value="true"
+												checked
+												onClick={() => {
+													console.log(store.owned.find(card => card.card_id == item.id));
+												}}
+											/>
 										) : (
 											<input type="checkbox" value="false" />
 										)
