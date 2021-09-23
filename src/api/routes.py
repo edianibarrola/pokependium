@@ -129,11 +129,12 @@ def updatecards():
     if owned_card is None:
         print(owned_card,"2")
         newcard= Card(card_id = body['card_id'], user_id = current_user_id, standard_art = body['standard_art'], standard_qty = body['standard_qty'], alternate_art = body['alternate_art'], alternate_qty = body['alternate_qty']) 
+        
         db.session.add(newcard) 
         db.session.commit()
         
     
-    if body['card_id'] == owned_card.card_id:
+    elif body['card_id'] == owned_card.card_id:
         print(owned_card,'3')
         updatecard = Card.query.filter_by(user_id = current_user_id, card_id = body['card_id']).first()
         updatecard.standard_art = body['standard_art']
