@@ -2,6 +2,7 @@ import React, { useState, useEffect, useContext } from "react";
 import PropTypes from "prop-types";
 import { Link, useParams } from "react-router-dom";
 import { Context } from "../store/appContext";
+import { useHistory } from "react-router-dom";
 
 import ListGroup from "react-bootstrap/ListGroup";
 import Tab from "react-bootstrap/Tab";
@@ -15,7 +16,23 @@ export const SetList = props => {
 	const { store, actions } = useContext(Context);
 	const [currentSetID, setCurrentSetID] = useState("");
 	const params = useParams();
-
+	const history = useHistory();
+	useEffect(
+		() => {
+			if (store.owned == null) {
+				history.push("/login");
+			}
+		},
+		[store.owned]
+	);
+	useEffect(
+		() => {
+			if (!store.authToken) {
+				history.push("/login");
+			}
+		},
+		[store.authToken]
+	);
 	return (
 		<Tab.Container id="list-group-tabs-example" defaultActiveKey="#link0">
 			<Row>

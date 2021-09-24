@@ -2,7 +2,7 @@ import React, { useState, useEffect, useContext } from "react";
 import PropTypes from "prop-types";
 import { Link, useParams } from "react-router-dom";
 import { Context } from "../store/appContext";
-
+import { useHistory } from "react-router-dom";
 import ListGroup from "react-bootstrap/ListGroup";
 import Tab from "react-bootstrap/Tab";
 import Row from "react-bootstrap/Row";
@@ -15,6 +15,7 @@ export const CardList = props => {
 	const { store, actions } = useContext(Context);
 	const [modalShow, setModalShow] = React.useState(false);
 	const params = useParams();
+	const history = useHistory();
 
 	const clickFunction = id => {
 		setModalShow(true);

@@ -18,7 +18,7 @@ export function RegisterUser() {
 	);
 
 	return (
-		<div className="container">
+		<div className="container mt-5">
 			<h3>Register User</h3>
 			{store.authError && <div className="alert alert-danger">Authentication Error</div>}
 

@@ -13,6 +13,7 @@ import { RegisterUser } from "./pages/RegisterUser";
 import { LoginUser } from "./pages/LoginUser";
 import { Dashboard } from "./pages/Dashboard";
 import { SecurePage } from "./component/SecurePage";
+import { Help } from "./pages/help";
 
 //create your first component
 const Layout = () => {
@@ -39,14 +40,17 @@ const Layout = () => {
 							</div>
 						</Route> */}
 						<Route exact path="/setlist">
-							<div className="container mt-5">
-								<SecurePage>
+							<SecurePage>
+								<div className="container mt-5">
 									<SetList />
-								</SecurePage>
-							</div>
+								</div>
+							</SecurePage>
 						</Route>
 						<Route exact path="/register">
 							<RegisterUser />
+						</Route>
+						<Route exact path="/help">
+							<Help />
 						</Route>
 
 						<Route exact path="/login">
