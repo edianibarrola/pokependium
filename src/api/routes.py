@@ -32,7 +32,7 @@ def register():
         "message": "User Created"
     }
 
-    return jsonify(response_body), 204
+    return jsonify(response_body), 200
 
 @api.route('/login', methods=['POST'])
 def login():
@@ -61,6 +61,17 @@ def userinfo():
     response_body = {
         "message": f"Hello {user.email} ",
         "details": user.serialize()
+    }
+
+    return jsonify(response_body), 200
+
+@api.route('/allusers', methods=['GET'])
+def getallusers():
+    all_users = User.query.all()
+    all_users = list(map(lambda x: x.serialize(), all_users))
+    response_body = {
+        "msg": "Here are all of the users.",
+        "details": all_users
     }
 
     return jsonify(response_body), 200
@@ -152,6 +163,7 @@ def updatecards():
 
 
 @api.route("/reset", methods=["POST"])
+@jwt_required()
 def update_password():
     if request.method == "POST":
         # new_password = request.json.get("password")
@@ -168,14 +180,14 @@ def update_password():
         # Create and set new password
         # result_str = ''.join(random.choice(string.ascii_letters) for i in range(12))
         # new_password_hashed = generate_password_hash(result_str)
-        newpass = password
+        
         password = ph.hash(password)
         user.password = password
         db.session.commit()        
 
         payload = {
             "msg": "Success.",
-            "pass": newpass
+            
         }
 
         return jsonify(payload), 200

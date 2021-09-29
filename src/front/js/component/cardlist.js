@@ -28,13 +28,19 @@ export const CardList = props => {
 				store.currentSet.data.map((item, i) => {
 					if (item.set.id.startsWith(props.setId)) {
 						return (
-							<div key={i} className="row mb-2 d-flex justify-content-around">
-								<div className="col-auto">
+							<div
+								key={i}
+								className="row mb-2 p-3 d-flex justify-content-around "
+								style={{ "border-bottom": "2px solid #8FD6E0" }}>
+								<div className="col-12 d-flex align-items-center " style={{ "font-size": "3rem" }}>
+									<span className="text-center w-100">{item.name}</span>
+								</div>
+								<div className="col-12 d-flex justify-content-center">
 									<img
 										onClick={() => {
 											clickFunction(item.id);
 										}}
-										style={{ height: "8em" }}
+										style={{ "max-height": "15rem", "min-height": "4rem" }}
 										src={item.images.small}
 										alt=""
 									/>
@@ -43,7 +49,6 @@ export const CardList = props => {
 									Launch vertically centered modal
 								</Button> */}
 
-								<div className="col-3 d-flex align-items-center">{item.name}</div>
 								<div className="col-auto d-flex flex-column justify-content-center align-items-center">
 									<div>Standard</div>
 									{store.owned.find(card => card.card_id == item.id) ? (
