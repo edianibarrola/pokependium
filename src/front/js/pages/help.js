@@ -18,8 +18,8 @@ export const Help = () => {
 						<Link to="/login">by clicking here</Link>
 					</p>
 					<p>
-						<sup>{"ATTENTION!"}</sup> Please make sure to remember your password as there is currently no
-						way to reset it.
+						<sup>{"ATTENTION!"}</sup> If you need to change your password, please send me an{" "}
+						<a href="mailto:edianibarrola@gmail.com">email.</a>
 					</p>
 					<br /> <br />
 					<h2>Viewing Cards</h2>

@@ -12,16 +12,14 @@ export const Home = () => {
 			<h1>Pokependium</h1>
 			<p>A simple site to track your collection and help you catch em all.</p>
 			<Link to="/login">
-				<div className="row d-flex justify-content-center flex-column">
-					<div
-						className="cssPokeball"
-						style={{ "min-height": "200px", "min-width": "200px", "padding-right": "200px" }}>
+				<div className="row d-flex justify-content-center  flex-column">
+					<div className=" mx-auto col-2 cssPokeball" style={{ "min-height": "200px", "min-width": "200px" }}>
 						<div className="pokeballTop " />
 						<div className="pokeballMid " />
 						<div className="pokeballBot " />
 					</div>
 					<Link to="/help">
-						<button className="btn ">How it works.</button>
+						<button className="btn my-5">How it works.</button>
 					</Link>
 				</div>
 			</Link>
