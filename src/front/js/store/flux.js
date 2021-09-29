@@ -16,6 +16,7 @@ const getState = ({ getStore, getActions, setStore }) => {
 					initial: "white"
 				}
 			],
+			authToken: null,
 			setList: [],
 			cardList: [],
 			currentSetID: [],

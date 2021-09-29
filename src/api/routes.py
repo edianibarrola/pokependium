@@ -32,7 +32,7 @@ def register():
         "message": "User Created"
     }
 
-    return jsonify(response_body), 200
+    return jsonify(response_body), 204
 
 @api.route('/login', methods=['POST'])
 def login():
@@ -63,7 +63,7 @@ def userinfo():
         "details": user.serialize()
     }
 
-    return jsonify(response_body), 200
+    return jsonify(user.serialize()), 200
 
 @api.route('/allusers', methods=['GET'])
 def getallusers():
